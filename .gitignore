@@ -1,0 +1,12 @@
+# Virtualenv
+env
+.env
+
+# OS and IDE
+.DS_STORE
+*.pyc
+__pycache__
+*.swp
+.~lock*
+.idea
+.vscode
