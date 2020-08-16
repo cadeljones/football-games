@@ -12,6 +12,9 @@ The API and its interactive docs can be found at [footballgames.cadeljones.com](
 ## To run the project locally
 This project can be run locally using either docker or python
 
+In either scenario you will need to configure environment variables in a .env file alongside the .env.example file.
+The important one is the NFL_API_KEY which allows the app to retrieve NFL data from the source API
+
 
 ### Docker
 [Install Docker](https://docs.docker.com/get-docker/)
