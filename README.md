@@ -1,11 +1,9 @@
 # Football Games API
-> 
+> An API that returns NFL events with information about the involved teams 
 
 
 ## View Demo
-The API and its interactive docs can be found here [footballgames.cadeljones.com](https://footballgames.cadeljones.com/)
-
-## Info
+The API and its interactive docs can be found at [footballgames.cadeljones.com](https://footballgames.cadeljones.com/)
 
 ## Technologies
 * [Python](https://www.python.org/)
@@ -53,6 +51,7 @@ environment.
 
 
 ## To-do list:
+- [ ] Descriptions for `games/` endpoint
 - [ ] Test with dummy data
 - [ ] Test data validators
 - [ ] Add key auth to limit usage
