@@ -36,8 +36,5 @@ To view logs
 ## To-do list:
 - [ ] test with dummy data
 - [ ] test data validators
-- [ ] Games class
-- [ ] pass errors through from source API
-- [ ] or set value on dict init
 - [ ] Todo add key auth to limit usage
 
