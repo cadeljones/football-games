@@ -46,4 +46,3 @@ def read_item(
         end = start
 
     return get_events(start, end, get_settings().nfl_api_key)
-    # return {"test": get_settings().nfl_api_key }
