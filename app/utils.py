@@ -16,9 +16,11 @@ def retrive_team_standings(nfl_api_key):
     r = requests.get(url, params=params)
 
     r_json = r.json()
-    team_standings_data = r_json['results']['data']
+    error = r_json['results'].get("error", False)
+    if error:
+        return False, error
 
-    return team_standings_data
+    return True, r_json['results']['data']
 
 
 def retrive_scoreboard(start_date, end_date, nfl_api_key):
@@ -27,20 +29,22 @@ def retrive_scoreboard(start_date, end_date, nfl_api_key):
     r = requests.get(url, params=params)
 
     r_json = r.json()
-    days_dict = r_json['results']
+    error = r_json['results'].get("error", False)
+    if error:
+        return False, error
 
-    return days_dict
+    return True, r_json['results']
 
 
-def get_team_stading_info(team_id, standings):
+def get_team_standings_info(team_id, standings):
     for team in standings:
         if team["team_id"] == team_id:
             return team
 
 
-def get_events(start_date, end_date, nfl_api_key):
-    team_standings_data = retrive_team_standings(nfl_api_key)
-    days_dict = retrive_scoreboard(start_date, end_date, nfl_api_key)
+def generate_events(standings, scoreboard):
+    team_standings_data = standings
+    days_dict = scoreboard
 
     all_events = []
     for day in days_dict:
@@ -49,12 +53,12 @@ def get_events(start_date, end_date, nfl_api_key):
             for k, event in events.items():
                 event_dict = {}
 
-                away_team = get_team_stading_info(
+                away_team = get_team_standings_info(
                     event['away_team_id'],
                     team_standings_data
                 )
 
-                home_team = get_team_stading_info(
+                home_team = get_team_standings_info(
                     event['home_team_id'],
                     team_standings_data
                 )
@@ -85,3 +89,18 @@ def get_events(start_date, end_date, nfl_api_key):
                 all_events.append(event_dict)
 
     return all_events
+
+
+
+def get_events(start_date, end_date, nfl_api_key):
+    team_standings_success, team_standings_data = retrive_team_standings(nfl_api_key)
+    scoreboard_success, scoreboard_data = retrive_scoreboard(start_date, end_date, nfl_api_key)
+
+    if team_standings_success and scoreboard_success:
+        return {"results": {"data": generate_events(team_standings_data, scoreboard_data) }}
+
+    elif not team_standings_success:
+        return {"results": {"error": team_standings_data }}
+    else:
+        return {"results": {"error": team_standings_data }}
+
