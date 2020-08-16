@@ -51,45 +51,42 @@ def generate_events(standings, scoreboard):
         if type(days_dict[day]) is dict:
             events = days_dict[day]['data']
             for k, event in events.items():
-                event_dict = {}
 
                 away_team = get_team_standings_info(
                     event['away_team_id'],
                     team_standings_data
                 )
-
                 home_team = get_team_standings_info(
                     event['home_team_id'],
                     team_standings_data
                 )
-
                 event_date = datetime.strptime(
                     event['event_date'],
                     '%Y-%m-%d %H:%M'
                 )
 
-                event_dict['event_id'] = event['event_id']
-                event_dict['event_date'] = event_date.strftime("%d-%m-%Y")
-                event_dict['event_time'] = event_date.strftime("%H:%M")
-                event_dict['away_team_id'] = event['away_team_id']
-                event_dict['away_nick_name'] = event['away_nick_name']
-                event_dict['away_city'] = event['away_city']
-                event_dict['away_rank'] = away_team['rank']
-                event_dict['away_rank_points'] = str(round(
-                    float(away_team['adjusted_points']), 2
-                ))
-                event_dict['home_team_id'] = event['home_team_id']
-                event_dict['home_nick_name'] = event['home_nick_name']
-                event_dict['home_city'] = event['home_city']
-                event_dict['home_rank'] = home_team['rank']
-                event_dict['home_rank_points'] = str(round(
-                    float(home_team['adjusted_points']), 2
-                ))
-
+                event_dict = {
+                    'event_id': event['event_id'],
+                    'event_date': event_date.strftime("%d-%m-%Y"),
+                    'event_time': event_date.strftime("%H:%M"),
+                    'away_team_id': event['away_team_id'],
+                    'away_nick_name': event['away_nick_name'],
+                    'away_city': event['away_city'],
+                    'away_rank': away_team['rank'],
+                    'away_rank_points': str(round(
+                        float(away_team['adjusted_points']), 2
+                    )),
+                    'home_team_id': event['home_team_id'],
+                    'home_nick_name': event['home_nick_name'],
+                    'home_city': event['home_city'],
+                    'home_rank': home_team['rank'],
+                    'home_rank_points': str(round(
+                        float(home_team['adjusted_points']), 2
+                    )),
+                }
                 all_events.append(event_dict)
 
     return all_events
-
 
 
 def get_events(start_date, end_date, nfl_api_key):
