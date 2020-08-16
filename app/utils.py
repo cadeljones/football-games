@@ -99,5 +99,5 @@ def get_events(start_date, end_date, nfl_api_key):
     elif not team_standings_success:
         return {"results": {"error": team_standings_data }}
     else:
-        return {"results": {"error": team_standings_data }}
+        return {"results": {"error": scoreboard_data }}
 
