@@ -10,7 +10,7 @@ def generate_scoreboard_url(start_date, end_date):
     return f'{NFL_BASE_URL}scoreboard/NFL/{start_date}/{end_date}.json'
 
 
-def retrive_team_standings(nfl_api_key):
+def retrieve_team_standings(nfl_api_key):
     params = {"api_key": nfl_api_key}
     url = NFL_BASE_URL + STANDINGS_URL
     r = requests.get(url, params=params)
@@ -23,7 +23,7 @@ def retrive_team_standings(nfl_api_key):
     return True, r_json['results']['data']
 
 
-def retrive_scoreboard(start_date, end_date, nfl_api_key):
+def retrieve_scoreboard(start_date, end_date, nfl_api_key):
     params = {"api_key": nfl_api_key}
     url = generate_scoreboard_url(start_date, end_date)
     r = requests.get(url, params=params)
@@ -90,8 +90,8 @@ def generate_events(standings, scoreboard):
 
 
 def get_events(start_date, end_date, nfl_api_key):
-    team_standings_success, team_standings_data = retrive_team_standings(nfl_api_key)
-    scoreboard_success, scoreboard_data = retrive_scoreboard(start_date, end_date, nfl_api_key)
+    team_standings_success, team_standings_data = retrieve_team_standings(nfl_api_key)
+    scoreboard_success, scoreboard_data = retrieve_scoreboard(start_date, end_date, nfl_api_key)
 
     if team_standings_success and scoreboard_success:
         return {"results": {"data": generate_events(team_standings_data, scoreboard_data) }}
